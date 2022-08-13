@@ -1,4 +1,4 @@
-FROM zhangtao25/purpleheart-ui:main as FrontEnd
+FROM zhangtao25/purpleheart:main as FrontEnd
 
 FROM node:14.16.0-alpine
 
