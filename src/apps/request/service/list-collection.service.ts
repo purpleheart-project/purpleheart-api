@@ -18,8 +18,25 @@ export class ListCollectionService {
         private requestRepository: Repository<Request>,
     ) {}
     async invoke() {
+
+
+        const arr = await this.fileRepository
+            .createQueryBuilder('file')
+            .where({})
+            .leftJoinAndSelect(Request, 'request', `request.id=file.relationship_request_id`)
+            .select([
+                'file.id as id',
+                'file.name as name',
+                'file.pid as pid',
+                'file.node_type as nodeType',
+                'file.relationship_request_id as relationshipRequestId',
+                'request.method as requestMethod',
+            ])
+            .getRawMany()
+
+
         //判断类型1 2 3
-        const arr = await this.fileRepository.find();
+        // const arr = await this.fileRepository.find();
         // const rrr = await this.fileRepository
         // const allRequests = await this.requestRepository.find()
         function arrToTree(arr: any, pid = 0) {
