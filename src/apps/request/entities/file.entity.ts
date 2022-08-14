@@ -22,8 +22,9 @@ export class File extends CommonBaseEntity {
     type: 'int',
     default: 0,
     comment: '类型',
+    name:'node_type'
   })
-  type: number;
+  nodeType: number;
 
   @Column({
     type: 'int',

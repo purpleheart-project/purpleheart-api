@@ -1,5 +1,6 @@
 import {
-  Controller,
+  Body,
+  Controller, Get, Post,
 } from "@nestjs/common";
 import {
   EnvService,
@@ -20,6 +21,10 @@ import {User} from "./entities/user.entity";
 import {UserSetting} from "./entities/user-setting.entity";
 import {Workspace} from "./entities/workspace.entity";
 import {WorkspaceMember} from "./entities/workspace-member.entity";
+import {AppService} from "../../app.service";
+import {ListCollectionService} from "./service/list-collection.service";
+import {CreateARequestService} from "./service/create-a-request.service";
+import {CreateFileService} from "./service/create-file.service";
 
 @Crud({
   model: {
@@ -27,7 +32,7 @@ import {WorkspaceMember} from "./entities/workspace-member.entity";
   },
 })
 @Controller("request")
-export class RequestController implements CrudController<Request> {
+export class RequestCrudController implements CrudController<Request> {
   constructor(public service: RequestService) {}
 }
 
@@ -37,7 +42,7 @@ export class RequestController implements CrudController<Request> {
   }
 })
 @Controller("file")
-export class FileController implements CrudController<File> {
+export class FileCrudController implements CrudController<File> {
   constructor(public service: FileService) {}
 }
 
@@ -47,7 +52,7 @@ export class FileController implements CrudController<File> {
   },
 })
 @Controller("env")
-export class EnvController implements CrudController<Env> {
+export class EnvCrudController implements CrudController<Env> {
   constructor(public service: EnvService) {}
 }
 
@@ -57,7 +62,7 @@ export class EnvController implements CrudController<Env> {
   }
 })
 @Controller("envvar")
-export class EnvVarController implements CrudController<EnvVar> {
+export class EnvVarCrudController implements CrudController<EnvVar> {
   constructor(public service: EnvVarService) {}
 }
 
@@ -67,7 +72,7 @@ export class EnvVarController implements CrudController<EnvVar> {
   },
 })
 @Controller("user")
-export class UserController implements CrudController<User> {
+export class UserCrudController implements CrudController<User> {
   constructor(public service: UserService) {}
 }
 
@@ -77,7 +82,7 @@ export class UserController implements CrudController<User> {
   }
 })
 @Controller("usersetting")
-export class UserSettingController implements CrudController<UserSetting> {
+export class UserSettingCrudController implements CrudController<UserSetting> {
   constructor(public service: UserSettingService) {}
 }
 
@@ -87,7 +92,7 @@ export class UserSettingController implements CrudController<UserSetting> {
   },
 })
 @Controller("workspace")
-export class WorkspaceController implements CrudController<Workspace> {
+export class WorkspaceCrudController implements CrudController<Workspace> {
   constructor(public service: WorkspaceService) {}
 }
 
@@ -97,6 +102,25 @@ export class WorkspaceController implements CrudController<Workspace> {
   }
 })
 @Controller("workspacemember")
-export class WorkspaceMemberController implements CrudController<WorkspaceMember> {
+export class WorkspaceMemberCrudController implements CrudController<WorkspaceMember> {
   constructor(public service: WorkspaceMemberService) {}
+}
+
+
+@Controller("")
+export class RequestController {
+  constructor(
+      private readonly listCollectionService: ListCollectionService,
+  private readonly createARequestService: CreateARequestService,
+      private readonly createFileService: CreateFileService
+  ) {}
+
+  @Get('/collection')
+  listCollection(): any {
+    return this.listCollectionService.invoke()
+  }
+  @Post('/collection')
+  createACollection(@Body() params): any{
+    return this.createFileService.invoke(params)
+  }
 }
