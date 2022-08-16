@@ -5,15 +5,15 @@
 
 import { Inject, Injectable } from "@nestjs/common";
 import { Repository } from "typeorm";
-import { File } from "../entities/file.entity";
-import { Request } from "../entities/request.entity";
-import {Workspace} from "../entities/workspace.entity";
+import { FileEntity } from "../entities/file.entity";
+import { RequestEntity } from "../entities/request.entity";
+import {WorkspaceEntity} from "../entities/workspace.entity";
 
 @Injectable()
 export class ListWorkspaceService {
     constructor(
-        @Inject('workspace_REPOSITORY')
-        private workspaceRepository: Repository<Workspace>,
+        @Inject('workspace_EntityRepository')
+        private workspaceRepository: Repository<WorkspaceEntity>,
     ) {}
     async listworkspace(params) {
         //判断类型1 2 3

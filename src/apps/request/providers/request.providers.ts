@@ -1,52 +1,52 @@
 import { Connection } from "typeorm";
-import { Request } from "../entities/request.entity";
-import { File } from "../entities/file.entity";
-import {Workspace} from "../entities/workspace.entity";
-import {WorkspaceMember} from "../entities/workspace-member.entity";
-import {Env} from "../entities/env.entity";
-import {EnvVar} from "../entities/env-var.entity";
-import {User} from "../entities/user.entity";
-import {UserSetting} from "../entities/user-setting.entity";
+import { RequestEntity } from "../entities/request.entity";
+import { FileEntity } from "../entities/file.entity";
+import {WorkspaceEntity} from "../entities/workspace.entity";
+import {WorkspaceMemberEntity} from "../entities/workspace-member.entity";
+import {EnvEntity} from "../entities/env.entity";
+import {EnvVarEntity} from "../entities/env-var.entity";
+import {UserEntity} from "../entities/user.entity";
+import {UserSettingEntity} from "../entities/user-setting.entity";
 
 export const requestProviders = [
   {
-    provide: "RequestRepository",
-    useFactory: (connection: Connection) => connection.getRepository(Request),
+    provide: "RequestEntityRepository",
+    useFactory: (connection: Connection) => connection.getRepository(RequestEntity),
     inject: ["DATABASE_CONNECTION"],
   },
   {
-    provide: "FileRepository",
-    useFactory: (connection: Connection) => connection.getRepository(File),
+    provide: "FileEntityRepository",
+    useFactory: (connection: Connection) => connection.getRepository(FileEntity),
     inject: ["DATABASE_CONNECTION"],
   },
   {
-    provide: "EnvRepository",
-    useFactory: (connection: Connection) => connection.getRepository(Env),
+    provide: "EnvEntityRepository",
+    useFactory: (connection: Connection) => connection.getRepository(EnvEntity),
     inject: ["DATABASE_CONNECTION"],
   },
   {
-    provide: "EnvVarRepository",
-    useFactory: (connection: Connection) => connection.getRepository(EnvVar),
+    provide: "EnvVarEntityRepository",
+    useFactory: (connection: Connection) => connection.getRepository(EnvVarEntity),
     inject: ["DATABASE_CONNECTION"],
   },
   {
-    provide: "UserRepository",
-    useFactory: (connection: Connection) => connection.getRepository(User),
+    provide: "UserEntityRepository",
+    useFactory: (connection: Connection) => connection.getRepository(UserEntity),
     inject: ["DATABASE_CONNECTION"],
   },
   {
-    provide: "UserSettingRepository",
-    useFactory: (connection: Connection) => connection.getRepository(UserSetting),
+    provide: "UserSettingEntityRepository",
+    useFactory: (connection: Connection) => connection.getRepository(UserSettingEntity),
     inject: ["DATABASE_CONNECTION"],
   },
   {
-    provide: "WorkspaceRepository",
-    useFactory: (connection: Connection) => connection.getRepository(Workspace),
+    provide: "WorkspaceEntityRepository",
+    useFactory: (connection: Connection) => connection.getRepository(WorkspaceEntity),
     inject: ["DATABASE_CONNECTION"],
   },
   {
-    provide: "WorkspaceMemberRepository",
-    useFactory: (connection: Connection) => connection.getRepository(WorkspaceMember),
+    provide: "WorkspaceMemberEntityRepository",
+    useFactory: (connection: Connection) => connection.getRepository(WorkspaceMemberEntity),
     inject: ["DATABASE_CONNECTION"],
   },
 ];

@@ -5,17 +5,17 @@
 
 import { Inject, Injectable } from "@nestjs/common";
 import { Repository } from "typeorm";
-import { File } from "../entities/file.entity";
-import { Request } from "../entities/request.entity";
-import {Workspace} from "../entities/workspace.entity";
+import { FileEntity } from "../entities/file.entity";
+import { RequestEntity } from "../entities/request.entity";
+import {WorkspaceEntity} from "../entities/workspace.entity";
 
 @Injectable()
 export class ListCollectionService {
     constructor(
-        @Inject('FileRepository')
-        private fileRepository: Repository<File>,
-        @Inject('RequestRepository')
-        private requestRepository: Repository<Request>,
+        @Inject('FileEntityRepository')
+        private fileRepository: Repository<FileEntity>,
+        @Inject('RequestEntityRepository')
+        private requestRepository: Repository<RequestEntity>,
     ) {}
     async invoke() {
 
@@ -23,7 +23,7 @@ export class ListCollectionService {
         const arr = await this.fileRepository
             .createQueryBuilder('file')
             .where({})
-            .leftJoinAndSelect(Request, 'request', `request.id=file.relationship_request_id`)
+            .leftJoinAndSelect(RequestEntity, 'request', `request.id=file.relationship_request_id`)
             .select([
                 'file.id as id',
                 'file.name as name',

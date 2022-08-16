@@ -1,17 +1,18 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { Repository } from "typeorm";
-import { File } from "../entities/file.entity";
-import { Request } from "../entities/request.entity";
+import { FileEntity } from "../entities/file.entity";
+import { RequestEntity } from "../entities/request.entity";
 
 @Injectable()
 export class CreateFileService {
   constructor(
-      @Inject('FileRepository')
-      private fileRepository: Repository<File>,
-      @Inject('RequestRepository')
-      private requestRepository: Repository<Request>,
+      @Inject('FileEntityRepository')
+      private fileRepository: Repository<FileEntity>,
+      @Inject('RequestEntityRepository')
+      private requestRepository: Repository<RequestEntity>,
   ) {}
-  async invoke(params) {
+  async invoke(currentUser, params) {
+    console.log(currentUser,'currentUser')
     //判断类型1 2 3
 
     const { nodeType,name,pid } = params;
@@ -24,7 +25,7 @@ export class CreateFileService {
       // console.log(a.identifiers[0].id,'a')
     }
 
-    const b = await this.fileRepository.insert({ name: name,nodeType:nodeType,pid:pid,relationshipRequestId:relationshipRequestId });
+    const b = await this.fileRepository.insert({ name: name,nodeType:nodeType,pid:pid,relationshipRequestId:relationshipRequestId,creator: currentUser });
 
     return { a, b };
   }

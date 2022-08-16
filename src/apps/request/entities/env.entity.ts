@@ -2,7 +2,7 @@ import { Column, Entity } from "typeorm";
 import { CommonBaseEntity } from "../../../common/base/common-base.entity";
 
 @Entity('env')
-export class Env extends CommonBaseEntity {
+export class EnvEntity extends CommonBaseEntity {
   @Column({
     type: 'varchar',
     default: '',

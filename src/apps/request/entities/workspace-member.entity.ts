@@ -2,7 +2,7 @@ import { Column, Entity } from "typeorm";
 import { CommonBaseEntity } from "../../../common/base/common-base.entity";
 
 @Entity('workspace_member')
-export class WorkspaceMember extends CommonBaseEntity {
+export class WorkspaceMemberEntity extends CommonBaseEntity {
   @Column({
     type: 'int',
     default: 0,

@@ -1,6 +1,7 @@
 import {
   Body,
   Controller, Get, Post,
+  Request, UseGuards
 } from "@nestjs/common";
 import {
   EnvService,
@@ -13,100 +14,101 @@ import {
   WorkspaceService
 } from "./request.service";
 import {Crud, CrudController} from "@nestjsx/crud";
-import {Request} from './entities/request.entity'
-import {File} from './entities/file.entity'
-import {Env} from "./entities/env.entity";
-import {EnvVar} from "./entities/env-var.entity";
-import {User} from "./entities/user.entity";
-import {UserSetting} from "./entities/user-setting.entity";
-import {Workspace} from "./entities/workspace.entity";
-import {WorkspaceMember} from "./entities/workspace-member.entity";
+import {RequestEntity} from './entities/request.entity'
+import {FileEntity} from './entities/file.entity'
+import {EnvEntity} from "./entities/env.entity";
+import {EnvVarEntity} from "./entities/env-var.entity";
+import {UserEntity} from "./entities/user.entity";
+import {UserSettingEntity} from "./entities/user-setting.entity";
+import {WorkspaceEntity} from "./entities/workspace.entity";
+import {WorkspaceMemberEntity} from "./entities/workspace-member.entity";
 import {AppService} from "../../app.service";
 import {ListCollectionService} from "./service/list-collection.service";
 import {CreateARequestService} from "./service/create-a-request.service";
 import {CreateFileService} from "./service/create-file.service";
+import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 
 @Crud({
   model: {
-    type: Request,
+    type: RequestEntity,
   },
 })
 @Controller("request")
-export class RequestCrudController implements CrudController<Request> {
+export class RequestCrudController implements CrudController<RequestEntity> {
   constructor(public service: RequestService) {}
 }
 
 @Crud({
   model: {
-    type: File
+    type: FileEntity
   }
 })
 @Controller("file")
-export class FileCrudController implements CrudController<File> {
+export class FileCrudController implements CrudController<FileEntity> {
   constructor(public service: FileService) {}
 }
 
 @Crud({
   model: {
-    type: Env,
+    type: EnvEntity,
   },
 })
 @Controller("env")
-export class EnvCrudController implements CrudController<Env> {
+export class EnvCrudController implements CrudController<EnvEntity> {
   constructor(public service: EnvService) {}
 }
 
 @Crud({
   model: {
-    type: EnvVar
+    type: EnvVarEntity
   }
 })
 @Controller("envvar")
-export class EnvVarCrudController implements CrudController<EnvVar> {
+export class EnvVarCrudController implements CrudController<EnvVarEntity> {
   constructor(public service: EnvVarService) {}
 }
 
 @Crud({
   model: {
-    type: User,
+    type: UserEntity,
   },
 })
 @Controller("user")
-export class UserCrudController implements CrudController<User> {
+export class UserCrudController implements CrudController<UserEntity> {
   constructor(public service: UserService) {}
 }
 
 @Crud({
   model: {
-    type: UserSetting
+    type: UserSettingEntity
   }
 })
 @Controller("usersetting")
-export class UserSettingCrudController implements CrudController<UserSetting> {
+export class UserSettingCrudController implements CrudController<UserSettingEntity> {
   constructor(public service: UserSettingService) {}
 }
 
 @Crud({
   model: {
-    type: Workspace,
+    type: WorkspaceEntity,
   },
 })
 @Controller("workspace")
-export class WorkspaceCrudController implements CrudController<Workspace> {
+export class WorkspaceCrudController implements CrudController<WorkspaceEntity> {
   constructor(public service: WorkspaceService) {}
 }
 
 @Crud({
   model: {
-    type: WorkspaceMember
+    type: WorkspaceMemberEntity
   }
 })
 @Controller("workspacemember")
-export class WorkspaceMemberCrudController implements CrudController<WorkspaceMember> {
+export class WorkspaceMemberCrudController implements CrudController<WorkspaceMemberEntity> {
   constructor(public service: WorkspaceMemberService) {}
 }
 
-
+// 手撸的接口
 @Controller("")
 export class RequestController {
   constructor(
@@ -119,8 +121,9 @@ export class RequestController {
   listCollection(): any {
     return this.listCollectionService.invoke()
   }
+  @UseGuards(JwtAuthGuard)
   @Post('/collection')
-  createACollection(@Body() params): any{
-    return this.createFileService.invoke(params)
+  createACollection(@Body() params,@Request() request: { user: { id: number } }): any{
+    return this.createFileService.invoke(request.user.id,params)
   }
 }

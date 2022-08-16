@@ -1,15 +1,15 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { Repository } from "typeorm";
-import { File } from "../entities/file.entity";
-import { Request } from "../entities/request.entity";
+import { FileEntity } from "../entities/file.entity";
+import { RequestEntity } from "../entities/request.entity";
 
 @Injectable()
 export class CreateARequestService {
     constructor(
-        @Inject('FileRepository')
-        private fileRepository: Repository<File>,
-        @Inject('RequestRepository')
-        private requestRepository: Repository<Request>,
+        @Inject('FileEntityRepository')
+        private fileRepository: Repository<FileEntity>,
+        @Inject('RequestEntityRepository')
+        private requestRepository: Repository<RequestEntity>,
     ) {}
     async invoke(params) {
 

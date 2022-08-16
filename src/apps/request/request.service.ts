@@ -1,68 +1,68 @@
 import { Injectable } from "@nestjs/common";
 import { TypeOrmCrudService } from "@nestjsx/crud-typeorm";
-import { Request } from "./entities/request.entity";
+import { RequestEntity } from "./entities/request.entity";
 import {InjectRepository} from "@nestjs/typeorm";
-import {File} from './entities/file.entity'
-import {Env} from "./entities/env.entity";
-import {EnvVar} from "./entities/env-var.entity";
-import {User} from "./entities/user.entity";
-import {UserSetting} from "./entities/user-setting.entity";
-import {Workspace} from "./entities/workspace.entity";
-import {WorkspaceMember} from "./entities/workspace-member.entity";
+import {FileEntity} from './entities/file.entity'
+import {EnvEntity} from "./entities/env.entity";
+import {EnvVarEntity} from "./entities/env-var.entity";
+import {UserEntity} from "./entities/user.entity";
+import {UserSettingEntity} from "./entities/user-setting.entity";
+import {WorkspaceEntity} from "./entities/workspace.entity";
+import {WorkspaceMemberEntity} from "./entities/workspace-member.entity";
 
 
 @Injectable()
-export class RequestService extends TypeOrmCrudService<Request> {
-  constructor(@InjectRepository(Request) repo) {
+export class RequestService extends TypeOrmCrudService<RequestEntity> {
+  constructor(@InjectRepository(RequestEntity) repo) {
     super(repo);
   }
 }
 
 @Injectable()
-export class FileService extends TypeOrmCrudService<File> {
-  constructor(@InjectRepository(File) repo) {
+export class FileService extends TypeOrmCrudService<FileEntity> {
+  constructor(@InjectRepository(FileEntity) repo) {
     super(repo);
   }
 }
 
 @Injectable()
-export class EnvService extends TypeOrmCrudService<Env> {
-  constructor(@InjectRepository(Env) repo) {
+export class EnvService extends TypeOrmCrudService<EnvEntity> {
+  constructor(@InjectRepository(EnvEntity) repo) {
     super(repo);
   }
 }
 
 @Injectable()
-export class EnvVarService extends TypeOrmCrudService<EnvVar> {
-  constructor(@InjectRepository(EnvVar) repo) {
+export class EnvVarService extends TypeOrmCrudService<EnvVarEntity> {
+  constructor(@InjectRepository(EnvVarEntity) repo) {
     super(repo);
   }
 }
 
 @Injectable()
-export class UserService extends TypeOrmCrudService<User> {
-  constructor(@InjectRepository(User) repo) {
+export class UserService extends TypeOrmCrudService<UserEntity> {
+  constructor(@InjectRepository(UserEntity) repo) {
     super(repo);
   }
 }
 
 @Injectable()
-export class UserSettingService extends TypeOrmCrudService<UserSetting> {
-  constructor(@InjectRepository(UserSetting) repo) {
+export class UserSettingService extends TypeOrmCrudService<UserSettingEntity> {
+  constructor(@InjectRepository(UserSettingEntity) repo) {
     super(repo);
   }
 }
 
 @Injectable()
-export class WorkspaceService extends TypeOrmCrudService<Workspace> {
-  constructor(@InjectRepository(Workspace) repo) {
+export class WorkspaceService extends TypeOrmCrudService<WorkspaceEntity> {
+  constructor(@InjectRepository(WorkspaceEntity) repo) {
     super(repo);
   }
 }
 
 @Injectable()
-export class WorkspaceMemberService extends TypeOrmCrudService<WorkspaceMember> {
-  constructor(@InjectRepository(WorkspaceMember) repo) {
+export class WorkspaceMemberService extends TypeOrmCrudService<WorkspaceMemberEntity> {
+  constructor(@InjectRepository(WorkspaceMemberEntity) repo) {
     super(repo);
   }
 }
