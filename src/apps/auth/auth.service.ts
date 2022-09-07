@@ -1,17 +1,17 @@
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
-import { UserService } from './user.service'
 import axios from 'axios'
 import { Repository } from 'typeorm'
-import { User } from './entities/user.entity'
+import {Model} from "mongoose";
+import {FileDocument} from "../core/schemas/file.schema";
+import {UserDocument} from "./schemas/user.schema";
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
-    private readonly userService: UserService,
-    @Inject('user_EntityRepository')
-    private userRepository: Repository<User>,
+    @Inject('MONGODB_CONNECTION_UserRepository')
+    private userModel: Model<UserDocument>,
   ) {}
   async validateUser(username: string, password: string): Promise<any> {
     console.log(
@@ -19,7 +19,7 @@ export class AuthService {
       username,
       password,
     )
-    const user = await this.userService.passwordLogin({ username, password })
+    const user = await this.userModel.findOne({ username, password })
     if (user) {
       return user
     } else {
@@ -28,10 +28,11 @@ export class AuthService {
   }
 
   async login(user: any) {
+    console.log(user,'user')
     const payload = {
       username: user.username,
-      id: Number(user.id),
-      roles: user.role.split(','),
+      id: user.id,
+      roles: user.role,
     }
     console.log('AuthService.login 第三步：存储信息', payload)
     return {
@@ -41,15 +42,22 @@ export class AuthService {
 
   async oauthToken(params) {
     // 3.登陆逻辑
-    const zaicha = await this.userRepository.findOneBy({ id: 1 })
+    const zaicha = await this.userModel.findOne({ username: 'zt' })
+    console.log(zaicha,'zaicha')
     return this.login({
       username: zaicha.username,
-      id: zaicha.id,
+      id: String(zaicha._id),
       role: zaicha.role,
     })
   }
-
-  async getUserinfo({ userId }) {
-    return this.userRepository.findOneBy({ id: userId })
+  async passwordLogin(params){
+    // 3.登陆逻辑
+    const zaicha = await this.userModel.findOne({ username: params.username,password:params.password })
+    console.log(zaicha,'zaicha')
+    return this.login({
+      username: zaicha.username,
+      id: String(zaicha._id),
+      role: zaicha.role,
+    })
   }
 }

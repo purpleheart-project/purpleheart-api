@@ -1,10 +1,15 @@
-import { Connection } from 'typeorm'
-import { User } from '../entities/user.entity'
+// import { Connection } from 'mongoose';
+import { UserSchema } from './../schemas/user.schema';
 
 export const userProviders = [
   {
-    provide: 'user_EntityRepository',
-    useFactory: (connection: Connection) => connection.getRepository(User),
-    inject: ['DATABASE_CONNECTION'],
+    provide: 'MONGODB_CONNECTION_UserRepository',
+    useFactory: (connection: any) =>
+        connection.model(
+            'user_model',
+            UserSchema,
+            'user',
+        ),
+    inject: ['MONGODB_CONNECTION'],
   },
-]
+];

@@ -1,6 +1,7 @@
 import { createConnection } from 'typeorm';
+import * as mongoose from 'mongoose';
 const { datasource } = global.conf;
-const { mysql } = datasource;
+const { mysql,mongodb } = datasource;
 console.log(mysql, 'mysql');
 export const databaseProviders = [
   {
@@ -21,12 +22,12 @@ export const databaseProviders = [
   },
 ];
 //
-// export const mongodbProviders = [
-//   {
-//     provide: 'MONGODB_CONNECTION',
-//     useFactory: (): Promise<typeof mongoose> =>
-//       mongoose.connect(
-//         `mongodb://${mongodb.username}:${mongodb.password}@${mongodb.host}:${mongodb.port}/${mongodb.database}`,
-//       ),
-//   },
-// ]
+export const mongodbProviders = [
+    {
+        provide: 'MONGODB_CONNECTION',
+        useFactory: (): Promise<typeof mongoose> =>
+            mongoose.connect(
+                `mongodb://${mongodb.username}:${mongodb.password}@${mongodb.host}:${mongodb.port}/${mongodb.database}`,
+            ),
+    },
+]

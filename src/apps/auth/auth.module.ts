@@ -6,7 +6,7 @@ import { jwtConstants } from './constants'
 import { JwtStrategy } from './strategies/jwt.strategy'
 import { LocalStrategy } from './strategies/local.strategy'
 import { DatabaseModule } from '../database/database.module'
-import { UserService } from './user.service'
+
 import { userProviders } from './providers/user.providers'
 import { AuthController } from './auth.controller'
 
@@ -24,7 +24,6 @@ import { AuthController } from './auth.controller'
     AuthService,
     LocalStrategy,
     JwtStrategy,
-    UserService,
     ...userProviders,
   ],
   exports: [AuthService],
