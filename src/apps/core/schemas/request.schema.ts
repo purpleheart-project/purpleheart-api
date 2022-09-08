@@ -9,6 +9,8 @@ export class Request {
     endpoint: string
     @Prop()
     method: string
+    @Prop()
+    body: string
     @Prop({
         default:()=>new Date()
     })

@@ -8,6 +8,7 @@ import {CreateFileService} from "./service/create-file.service";
 import {FileController} from "./controller/file.controller";
 import {GetCollectionTreeService} from "./service/get-collection-tree.service";
 import {RetrieveRequestService} from "./service/retrieve-request.service";
+import {UpdateRequestService} from "./service/update-request.service";
 
 @Module({
     imports: [DatabaseModule],
@@ -16,6 +17,7 @@ import {RetrieveRequestService} from "./service/retrieve-request.service";
         CreateFileService,
         GetCollectionTreeService,
         RetrieveRequestService,
+        UpdateRequestService,
         ...fileProviders,
     ],
 })

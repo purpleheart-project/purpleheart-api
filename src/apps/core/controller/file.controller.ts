@@ -3,6 +3,7 @@ import {CreateFileService} from "../service/create-file.service";
 import {JwtAuthGuard} from "../../auth/guards/jwt-auth.guard";
 import {GetCollectionTreeService} from "../service/get-collection-tree.service";
 import {RetrieveRequestService} from "../service/retrieve-request.service";
+import { UpdateRequestService } from "../service/update-request.service";
 // import {RetrieveRequestService} from "../../request/service/retrieve-request.service";
 
 @Controller()
@@ -10,7 +11,8 @@ export class FileController {
   constructor(
       private createFileService:CreateFileService,
       private getCollectionTreeService:GetCollectionTreeService,
-      private retrieveRequestService:RetrieveRequestService
+      private retrieveRequestService:RetrieveRequestService,
+      private updateRequestService:UpdateRequestService
   ) {
   }
   @UseGuards(JwtAuthGuard)
@@ -28,5 +30,10 @@ export class FileController {
   @Post('retrieverequest')
   retrieveRequest(@Body() reqBody,@Request() req){
     return this.retrieveRequestService.invoke(reqBody)
+  }
+
+  @Post('updaterequest')
+  updateRequest(@Body() reqBody,@Request() req){
+    return this.updateRequestService.invoke(reqBody)
   }
 }
